@@ -1,0 +1,175 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.HashMap;
+
+public class PorscheConfigurator {
+
+    private JFrame frame;
+    private String selectedModel = null;
+    private final HashMap<String, Integer>  enhancementCosts = new HashMap<>();
+    private int finalCost = 0;
+
+    // Prices
+    private final int carreraPrice = 115000;
+    private final int turboPrice = 175000;
+
+    private final double freightRate = 0.025;
+    private final double taxRate = 0.13;
+    private final int plateStandard = 57;
+    private final int plateCustom = 500;
+    private final int stickerOneYear = 120;
+    private final int stickerTwoYear = 240;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                PorscheConfigurator configurator = new PorscheConfigurator();
+                configurator.frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public PorscheConfigurator() {
+        initialize();
+    }
+
+    private void initialize() {
+        frame = new JFrame();
+        frame.setBounds(100, 100, 600, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Display model selection
+        showModelSelection();
+    }
+
+    private void showModelSelection() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 1));
+
+        JLabel label = new JLabel("Select Your Porsche 911 Model");
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(label);
+
+        JButton carreraButton = new JButton("Carrera - $115,000");
+        carreraButton.addActionListener(e -> {
+            selectedModel = "Carrera";
+            displayEnhancementOptions();
+        });
+        panel.add(carreraButton);
+
+        JButton turboButton = new JButton("Turbo - $175,000");
+        turboButton.addActionListener(e -> {
+            selectedModel = "Turbo";
+            displayEnhancementOptions();
+        });
+        panel.add(turboButton);
+
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(panel);
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private void displayEnhancementOptions() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(7, 2));
+
+        JLabel label = new JLabel("Customize Your Porsche " + selectedModel);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(label);
+        panel.add(new JLabel()); // Empty space
+
+        // Paint options
+        JComboBox<String> paintOptions = new JComboBox<>(new String[]{"Standard - $0", "Metallic - $2,000", "Custom - $5,000"});
+        panel.add(new JLabel("Paint:"));
+        panel.add(paintOptions);
+
+        // Wheels options
+        JComboBox<String> wheelsOptions = new JComboBox<>(new String[]{"Standard - $0", "Sport - $3,000", "Performance - $5,000"});
+        panel.add(new JLabel("Wheels:"));
+        panel.add(wheelsOptions);
+
+        // Interior options
+        JComboBox<String> interiorOptions = new JComboBox<>(new String[]{"Leather - $0", "Alcantara - $2,500", "Custom Stitching - $4,000"});
+        panel.add(new JLabel("Interior:"));
+        panel.add(interiorOptions);
+
+        // Performance options
+        JComboBox<String> performanceOptions = new JComboBox<>(new String[]{"Standard - $0", "Sport Chrono - $3,000", "Track - $6,000"});
+        panel.add(new JLabel("Performance:"));
+        panel.add(performanceOptions);
+
+        // Tech options
+        JComboBox<String> techOptions = new JComboBox<>(new String[]{"Basic - $0", "Navigation - $2,000", "Autonomous - $5,000"});
+        panel.add(new JLabel("Tech:"));
+        panel.add(techOptions);
+
+        // Plate and sticker options
+        JComboBox<String> plateOptions = new JComboBox<>(new String[]{"Standard - $57", "Custom - $500"});
+        panel.add(new JLabel("Plate:"));
+        panel.add(plateOptions);
+
+        JComboBox<String> stickerOptions = new JComboBox<>(new String[]{"1 Year - $120", "2 Years - $240"});
+        panel.add(new JLabel("Sticker:"));
+        panel.add(stickerOptions);
+
+        JButton calculateButton = new JButton("Calculate Total Cost");
+        calculateButton.addActionListener(e -> calculateCost(
+                paintOptions.getSelectedIndex(),
+                wheelsOptions.getSelectedIndex(),
+                interiorOptions.getSelectedIndex(),
+                performanceOptions.getSelectedIndex(),
+                techOptions.getSelectedIndex(),
+                plateOptions.getSelectedIndex(),
+                stickerOptions.getSelectedIndex()
+        ));
+        panel.add(calculateButton);
+
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(panel);
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private void calculateCost(int paintIndex, int wheelsIndex, int interiorIndex, int performanceIndex, int techIndex, int plateIndex, int stickerIndex) {
+        int basePrice = selectedModel.equals("Carrera") ? carreraPrice : turboPrice;
+
+        int paintCost = switch (paintIndex) {
+            case 1 -> 2000;
+            case 2 -> 5000;
+            default -> 0;
+        };
+        int wheelsCost = switch (wheelsIndex) {
+            case 1 -> 3000;
+            case 2 -> 5000;
+            default -> 0;
+        };
+        int interiorCost = switch (interiorIndex) {
+            case 1 -> 2500;
+            case 2 -> 4000;
+            default -> 0;
+        };
+        int performanceCost = switch (performanceIndex) {
+            case 1 -> 3000;
+            case 2 -> 6000;
+            default -> 0;
+        };
+        int techCost = switch (techIndex) {
+            case 1 -> 2000;
+            case 2 -> 5000;
+            default -> 0;
+        };
+        int plateCost = plateIndex == 1 ? plateCustom : plateStandard;
+        int stickerCost = stickerIndex == 1 ? stickerTwoYear : stickerOneYear;
+
+        int enhancementsCost = paintCost + wheelsCost + interiorCost + performanceCost + techCost;
+        double freight = (basePrice + enhancementsCost) * freightRate;
+        double tax = (basePrice + enhancementsCost + freight) * taxRate;
+
+        finalCost = basePrice + enhancementsCost + (int) freight + (int) tax + plateCost + stickerCost;
+
+        JOptionPane.showMessageDialog(frame, "Final Cost: $" + finalCost, "Total Cost", JOptionPane.INFORMATION_MESSAGE);
+    }
+}
