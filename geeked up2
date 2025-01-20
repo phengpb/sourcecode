@@ -1,0 +1,88 @@
+(Indicate the sequence of events and the workflow of the code
+Identify the variables, functions, and other key programming elements
+Be specific when talking about the parameters being used in the functions
+Identify what would be a physical element on the Micro:BIT)
+Program 1:
+index: Tracks position/state.
+obstacles: Holds obstacle positions (empty initially).
+bird: Sprite on LED grid at (0, 2).
+on start: Runs when powered on.
+create sprite: Places bird at (0, 2).
+set blink: Makes bird blink every 300 ms.
+physical element: LED grid displays the bird.
+button A pressed: Moves bird up by 1 unit (decreases y).
+button B pressed: Moves bird down by 1 unit (increases y).
+forever loop: Continuously runs the game.
+remove obstacles: Deletes obstacles when off-screen (x = 0).
+move obstacles: Obstacles move left (x decreases).
+create new obstacles: Every 3 ticks, new obstacles appear at x = 4, with one row left open for
+the bird.
+collision detection: If the bird hits an obstacle, game over.
+tick count: Adds 1 tick every second.
+Program 2:
+
+Button A pressed:Moves bar_x left if it's greater than 0.
+Unplot current position, decrease bar_x, then plot new position
+Button B pressed: Moves bar_x right if it's less than 3.
+Unplot current position, increase bar_x, then plot new position.
+Forever loop:Continuously runs the game.
+Set variables: Initializes point, interval, interval_step, ball position (ball_x, ball_y), ball
+movement (ball_dx, ball_dy), and bar position (bar_x).
+Show "GO!": Displays "GO!" on the LED grid at the start.
+Plot positions: Displays ball and bar at their starting positions.
+While in-game: Main game loop, runs while in_game is true.
+Ball movement boundaries: Changes ball_dx or ball_dy direction when hitting grid boundaries
+(x = 0, x = 4, y = 0).
+Bar collision: Checks if the ball hits the bar (y = 3), adds point and changes direction.
+Ball hits bar: Ball direction (ball_dy) changes and score increases by 1.
+Speed adjustment: Interval decreases by interval_step if not at 0.
+Missed ball: If the ball doesn't hit the bar, set in_game to false.
+In-game ball movement: Updates ball position on grid (plot/unplot) while in_game is true.
+Pause: Wait for milliseconds to control speed.
+Game over: If in_game is false, display final score and end game.
+Part 2: Load the code
+(Images below)
+(Indicate the sequence of events and the workflow of the code
+Identify the variables, functions, and other key programming elements
+Be specific when talking about the parameters being used in the functions
+Identify what would be a physical element on the Micro:BIT)
+Program 1:
+index: Tracks position/state.
+obstacles: Holds obstacle positions (empty initially).
+bird: Sprite on LED grid at (0, 2).
+on start: Runs when powered on.
+create sprite: Places bird at (0, 2).
+set blink: Makes bird blink every 300 ms.
+physical element: LED grid displays the bird.
+button A pressed: Moves bird up by 1 unit (decreases y).
+button B pressed: Moves bird down by 1 unit (increases y).
+forever loop: Continuously runs the game.
+remove obstacles: Deletes obstacles when off-screen (x = 0).
+move obstacles: Obstacles move left (x decreases).
+create new obstacles: Every 3 ticks, new obstacles appear at x = 4, with one row left open for
+the bird.
+collision detection: If the bird hits an obstacle, game over.
+tick count: Adds 1 tick every second.
+Program 2:
+
+Button A pressed:Moves bar_x left if it's greater than 0.
+Unplot current position, decrease bar_x, then plot new position
+Button B pressed: Moves bar_x right if it's less than 3.
+Unplot current position, increase bar_x, then plot new position.
+Forever loop:Continuously runs the game.
+Set variables: Initializes point, interval, interval_step, ball position (ball_x, ball_y), ball
+movement (ball_dx, ball_dy), and bar position (bar_x).
+Show "GO!": Displays "GO!" on the LED grid at the start.
+Plot positions: Displays ball and bar at their starting positions.
+While in-game: Main game loop, runs while in_game is true.
+Ball movement boundaries: Changes ball_dx or ball_dy direction when hitting grid boundaries
+(x = 0, x = 4, y = 0).
+Bar collision: Checks if the ball hits the bar (y = 3), adds point and changes direction.
+Ball hits bar: Ball direction (ball_dy) changes and score increases by 1.
+Speed adjustment: Interval decreases by interval_step if not at 0.
+Missed ball: If the ball doesn't hit the bar, set in_game to false.
+In-game ball movement: Updates ball position on grid (plot/unplot) while in_game is true.
+Pause: Wait for milliseconds to control speed.
+Game over: If in_game is false, display final score and end game.
+Part 2: Load the code
+
