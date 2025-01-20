@@ -1,0 +1,113 @@
+/*
+  GenericMenuProgram
+  Version 0.1
+Ben Inthiemvong
+  Mr Di Tomasso
+  Creating a simple, generic menu
+ */
+import javax.swing.*;
+import java.awt.*;
+
+public class GenericMenu {
+    private JFrame frame;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                GenericMenu program = new GenericMenu();
+                program.frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public GenericMenu() {
+        initialize();
+    }
+
+    private void initialize() {
+        frame = new JFrame("Generic Configurator");
+        frame.setBounds(100, 100, 800, 600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Create menu bar
+        JMenuBar menuBar = new JMenuBar();
+        frame.setJMenuBar(menuBar);
+
+        // Create File menu
+        JMenu fileMenu = new JMenu("File");
+        fileMenu.setMnemonic('F'); // Shortcut key 'Alt + F'
+        menuBar.add(fileMenu);
+
+        // Create menu items for File menu
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.addActionListener(e -> System.exit(0)); // Exits the program
+        fileMenu.add(exitMenuItem);
+
+        fileMenu.addSeparator(); // Adds a separator
+
+        JMenuItem newProgramMenuItem = new JMenuItem("Open New Program");
+        newProgramMenuItem.addActionListener(e -> new AnotherProgram()); // Opens another program
+        fileMenu.add(newProgramMenuItem);
+
+        // Create Options menu
+        JMenu optionsMenu = new JMenu("Options");
+        optionsMenu.setMnemonic('O'); // Shortcut key 'Alt + O'
+        menuBar.add(optionsMenu);
+
+        // Add category selection with JRadioButtonMenuItem
+        JMenu categoryMenu = new JMenu("Select Category");
+        optionsMenu.add(categoryMenu);
+
+        ButtonGroup categoryGroup = new ButtonGroup();
+        JRadioButtonMenuItem category1Option = new JRadioButtonMenuItem("Category A");
+        JRadioButtonMenuItem category2Option = new JRadioButtonMenuItem("Category B");
+        JRadioButtonMenuItem category3Option = new JRadioButtonMenuItem("Category C");
+
+        categoryGroup.add(category1Option);
+        categoryGroup.add(category2Option);
+        categoryGroup.add(category3Option);
+
+        categoryMenu.add(category1Option);
+        categoryMenu.add(category2Option);
+        categoryMenu.add(category3Option);
+
+        // Add a checkbox menu item for additional features
+        JCheckBoxMenuItem advancedOption = new JCheckBoxMenuItem("Enable Advanced Mode");
+        optionsMenu.add(advancedOption);
+
+        // Add display panel
+        JLabel displayLabel = new JLabel("Select a category to begin.", JLabel.CENTER);
+        displayLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Adds a border
+        frame.getContentPane().add(displayLabel, BorderLayout.CENTER);
+
+        // Add Action Listeners to update the label based on selected category
+        category1Option.addActionListener(e -> displayLabel.setText("Category A Selected"));
+        category2Option.addActionListener(e -> displayLabel.setText("Category B Selected"));
+        category3Option.addActionListener(e -> displayLabel.setText("Category C Selected"));
+
+        // Add Action Listener for the advanced mode
+        advancedOption.addActionListener(e -> {
+            if (advancedOption.isSelected()) {
+                displayLabel.setText("Advanced Mode Enabled");
+            } else {
+                displayLabel.setText("Advanced Mode Disabled");
+            }
+        });
+    }
+
+    // Example class for the "Open New Program" menu item
+    private static class AnotherProgram {
+        public AnotherProgram() {
+            JFrame newFrame = new JFrame("Another Program");
+            newFrame.setBounds(200, 200, 400, 300);
+            newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            JLabel label = new JLabel("Welcome to the new program!", JLabel.CENTER);
+            newFrame.getContentPane().add(label, BorderLayout.CENTER);
+
+            newFrame.setVisible(true);
+        }
+    }
+}
