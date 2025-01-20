@@ -1,0 +1,88 @@
+package firstGuiPackage;
+/*
+  First GUI Program
+  Version 0.1
+Ben Inthiemvong
+  Mr Di Tomasso
+  To create a simple GUI using simple commands
+*/
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class firstGuiPgm {
+    /**
+     * Declare objects
+     */
+    static JLabel label;
+    static JTextField programmersRockText, uneditableText;
+    static JButton btnForText;
+    static JButton btnForImage;
+
+    //method to create GUI
+    private static void guiApp() {
+
+        //Create and set up the window.
+        JFrame frame = new JFrame("Simple GUI");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //create and set up components
+        JPanel panel = new JPanel();
+        label = new JLabel("Selection Text");
+        btnForText = new JButton("Send text!");
+        btnForText.setActionCommand("Plain");
+
+        Icon colorfulPic = new ImageIcon ("C:\\Users\\phengpb646\\IdeaProjects\\firstGui\\images\\depositphotos_33472707-stock-photo-giraffe.jpg");
+        Image newPic = ((ImageIcon) colorfulPic).getImage().getScaledInstance(40,40, java.awt.Image.SCALE_SMOOTH);
+        colorfulPic=new ImageIcon(newPic);
+        //Icon bug2= new ImageIcon( "C:\\Users\\phengpb646\\IdeaProjects\\firstGui\\images\\depositphotos_33472707-stock-photo-giraffe.jpg" );
+        btnForImage = new JButton(colorfulPic);
+        //btnFancy = new JButton("Diff text!");
+        btnForImage.setActionCommand("Fancy");
+
+
+
+        //create a new ButtonHandler instance
+        ButtonHandler onClick = new ButtonHandler();
+        btnForText.addActionListener(onClick);
+        btnForImage.addActionListener(onClick);
+
+        programmersRockText = new JTextField( "Programmers rock!", 20);
+        uneditableText = new JTextField( "Uneditable text field", 15 );
+        uneditableText.setEditable( false );
+
+        panel.add(btnForText);
+        panel.add(btnForImage);
+        panel.add(label);
+        panel.add(programmersRockText);
+        panel.add(uneditableText);
+
+        frame.add(panel);
+        frame.setSize(250,100);
+        frame.setVisible(true);
+    }
+
+    //create custom event handler
+    private static class ButtonHandler implements ActionListener {
+        public void actionPerformed(ActionEvent e){
+            //which button?
+            String command = e.getActionCommand();
+            //give message
+            if(command.equals("Plain")){
+                label.setText("You picked the plain button");
+            } else {
+                label.setText("You picked the Fancy Button!");
+            }
+        }
+    }
+
+    //main method to run the GUI
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                guiApp();
+            }
+        });
+    }
+}
